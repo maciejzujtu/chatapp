@@ -1,51 +1,22 @@
-"use client"
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import { WebsocketListener } from "../api/server"
+export default function LandingPage() {
+  return (
+    <div className="w-full h-screen flex flex-col justify-center items-center text-center bg-gray-800 ">
+        <div className="bg-stone-900 w-200 h-auto rounded-xl shadow-xl outline-4 outline-stone-200">
 
-function send_message(content: string, ws: WebSocket, setMessage: Dispatch<SetStateAction<string>>) {
-    ws.send(content)
-    setMessage("")
-}
-
-const ws = new WebsocketListener()
-const server = ws.server
-
-export default function Chatroom() {
-    const [message, setMessage] = useState("")
-    const [messages, setMessages] = useState<string[]>([])
-
-    // Listen for messages from server
-    useEffect(() => {
-        server.addEventListener("message", (msg) => {
-            setMessages((prev) => [...prev, msg.data])
-        })
-    }, [])
-
-    return (
-        <div>
-            <h2>Chatroom</h2>
-            <input  
-                type="text" 
-                placeholder="Type something"
-                className="bg-white text-black w-1/2"
-                onChange={(e) => setMessage(e.target.value)}
-                value={message}
-                onKeyDown={(e) => {
-                    if (e.key === "Enter" && message.trim() !== "") {
-                        send_message(message, server, setMessage)
-                    }
-                }}
-            />
-            
-            <h1>Messages</h1>
-            <div 
-                id="messages"
-                className="bg-white text-black w-1/2 h-80 overflow-auto p-2"
-            >
-                {messages.map((m, index) => (
-                    <div className="text-black" key={index}>{m}</div>
-                ))}
+                 <h1 className="text-4xl font-bold text-white m-4"> wellcome  'user'</h1>
+                    <p  className="text-gray-300">here you can chat with some random person</p>
+          
+            <div className="w-full h-70 flex flex-row gap-26 justify-center items-center">
+                
+                <button className="bg-stone-400 w-60 h-20 rounded-2xl text-xl font-bold hover:bg-stone-100" > chose thread </button>
+                <button className="bg-stone-400 w-60 h-20 rounded-2xl text-xl font-bold hover:bg-stone-100" > create your own </button>
+                
             </div>
+
+
         </div>
-    )
+
+    </div>
+  );
+
 }
